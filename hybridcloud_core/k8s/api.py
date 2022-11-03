@@ -46,9 +46,22 @@ def delete_secret(namespace, name):
         pass
 
 
+def create_namespaced_custom_object(resource: Resource, namespace: str, name: str, body):
+    api = kubernetes.client.CustomObjectsApi()
+    api.create_namespaced_custom_object(resource.group, resource.version, namespace, resource.plural, body)
+
+
 def patch_namespaced_custom_object(resource: Resource, namespace: str,  name: str, body):
     api = kubernetes.client.CustomObjectsApi()
     api.patch_namespaced_custom_object(resource.group, resource.version, namespace, resource.plural, name, body)
+
+
+def create_or_update_namespaced_custom_object(resource: Resource, namespace: str,  name: str, body):
+    api = kubernetes.client.CustomObjectsApi()
+    if get_namespaced_custom_object(resource, namespace, name):
+        patch_namespaced_custom_object(resource, namespace, name, body)
+    else:
+        create_namespaced_custom_object(resource, namespace, name, body)
 
 
 def get_namespaced_custom_object(resource: Resource, namespace: str, name: str):
