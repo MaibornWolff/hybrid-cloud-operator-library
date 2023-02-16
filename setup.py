@@ -14,7 +14,7 @@ setup(
     ],
     packages=["hybridcloud_core", "hybridcloud_core/configuration", "hybridcloud_core/k8s", "hybridcloud_core/operator"],
     install_requires=[
-        "kubernetes==25.3.0",
+        "kubernetes==26.1.0",
         "kopf==1.36.0",
         "pyyaml==6.0",
     ],
